@@ -1,62 +1,56 @@
-from random import randint, choice as rc
-
 from faker import Faker
-
-from app import app
-from models import db, Recipe, User
+from random import randint, choice as rc
+from config import app, db, bcrypt
+from models import User, Recipe
 
 fake = Faker()
 
-with app.app_context():
+def seed_data():
+    with app.app_context():
+        print("Deleting all records...")
+        db.session.query(Recipe).delete()
+        db.session.query(User).delete()
 
-    print("Deleting all records...")
-    Recipe.query.delete()
-    User.query.delete()
+        print("Creating users...")
+        users = []
+        usernames = []
 
-    fake = Faker()
-
-    print("Creating users...")
-
-    # Let the users have unique usernames
-    users = []
-    usernames = []
-
-    for i in range(20):
-        
-        username = fake.first_name()
-        while username in usernames:
+        for i in range(20):
             username = fake.first_name()
-        usernames.append(username)
+            while username in usernames:
+                username = fake.first_name()
+            usernames.append(username)
 
-        user = User(
-            username=username,
-            bio=fake.paragraph(nb_sentences=3),
-            image_url=fake.url(),
-        )
+            email = fake.email()
 
-        user.password_hash = user.username + 'password'
+            user = User(
+                username=username,
+                email=email,
+                bio=fake.paragraph(nb_sentences=3),
+                image_url=fake.url(),
+            )
 
-        users.append(user)
+            password = "newpass"
+            user.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
 
-    db.session.add_all(users)
+            db.session.add(user)
+            db.session.commit()
 
-    print("Creating recipes...")
-    recipes = []
-    for i in range(100):
-        instructions = fake.paragraph(nb_sentences=8)
-        
-        recipe = Recipe(
-            title=fake.sentence(),
-            instructions=instructions,
-            minutes_to_complete=randint(15,90),
-            video_url=video_url,
-        )
+            users.append(user)
 
-        recipe.user = rc(users)
+            print("Creating recipes...")
+            for j in range(5):
+                instructions = fake.paragraph(nb_sentences=8)
+                
+                recipe = Recipe(
+                    title=fake.sentence(),
+                    instructions=instructions,
+                    minutes_to_complete=randint(15,90),
+                    user=user
+                )
 
-        recipes.append(recipe)
+                db.session.add(recipe)
+                db.session.commit()
 
-    db.session.add_all(recipes)
-    
-    db.session.commit()
-    print("Complete.")
+
+seed_data()
