@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import HomePage from './pages/HomePage';
-import FavoritesPage from './pages/FavoritesPage';
+import FavoritesPage from '../pages/FavoritesPage';
 import Popular from './pages/Popular';
 import Recipes from './pages/Recipes';
 import LoginModal from './pages/LoginModal';
