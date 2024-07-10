@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 from flask_cors import CORS
@@ -13,6 +13,8 @@ CORS(app)
 app.config["JWT_SECRET_KEY"] = "fsbdgfnhgvjnvhmvh"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 app.config["SECRET_KEY"] = "JKSRVHJVFBSR"
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'ysecretkey'
 
 jwt = JWTManager(app)
 migrate = Migrate(app, db)
@@ -40,61 +42,54 @@ class Register(Resource):
         db.session.commit()
         return jsonify({"msg": "User created successfully"})
 
-class RecipeList(Resource):
-    @jwt_required
+class RecipeIndex(Resource):
+
     def get(self):
-        recipes = Recipe.query.all()
-        return jsonify([recipe.serialize() for recipe in recipes])
+        user_id = session.get('user_id')
+        if user_id is None:
+            return {'error': 'Unauthorized'}, 401
+
+        user = User.query.filter(User.id == user_id).first()
+        if user is None:
+            return {'error': 'Unauthorized'}, 401
+        return [recipe.to_dict() for recipe in user.recipes], 200
     
-    @jwt_required
+
     def post(self):
-        title = request.json.get('title')
-        instructions = request.json.get('instructions')
-        minutes_to_complete = request.json.get('minutes_to_complete')
-        user_id = get_jwt_identity()
-        user = User.query.get(user_id)
-        recipe = Recipe(title=title, instructions=instructions, minutes_to_complete=minutes_to_complete, user=user)
-        db.session.add(recipe)
-        db.session.commit()
-        return jsonify({"msg": "Recipe created successfully"})
+        user_id = session.get('user_id')
+        if user_id is None:
+            return {'error': 'Unauthorized'}, 401
 
-class RecipeDetail(Resource):
-    @jwt_required
-    def get(self, id):
-        recipe = Recipe.query.get(id)
-        if recipe:
-            data = recipe.serialize()  
-            return jsonify(data)  
-        return jsonify({"msg": "Recipe not found"}), 404
-    
-    @jwt_required
-    def put(self, id):
-        recipe = Recipe.query.get(id)
-        if recipe:
-            title = request.json.get('title')
-            instructions = request.json.get('instructions')
-            minutes_to_complete = request.json.get('minutes_to_complete')
-            recipe.title = title
-            recipe.instructions = instructions
-            recipe.minutes_to_complete = minutes_to_complete
-            db.session.commit()
-            return jsonify({"msg": "Recipe updated successfully"})
-        return jsonify({"msg": "Recipe not found"}), 404
+        request_json = request.get_json()
 
-    @jwt_required
-    def delete(self, id):
-        recipe = Recipe.query.get(id)
-        if recipe:
-            db.session.delete(recipe)
+        title = request_json['title']
+        instructions = request_json['instructions']
+        minutes_to_complete = request_json['minutes_to_complete']
+
+        try:
+
+            recipe = Recipe(
+                title=title,
+                instructions=instructions,
+                minutes_to_complete=minutes_to_complete,
+                user_id=user_id,
+            )
+
+            db.session.add(recipe)
             db.session.commit()
-            return jsonify({"msg": "Recipe deleted successfully"})
-        return jsonify({"msg": "Recipe not found"}), 404
+
+            return recipe.to_dict(), 201
+
+        except IntegrityError:
+
+            return {'error': '422 Unprocessable Entity'}, 422
+
 
 api = Api(app)
 api.add_resource(Login, '/login')
 api.add_resource(Register, '/register')
-api.add_resource(RecipeList, '/recipes')
-api.add_resource(RecipeDetail, '/recipes/<int:id>')
+api.add_resource(RecipeIndex, '/recipes')
+#api.add_resource(RecipeDetail, '/recipes/<int:id>')
 
 if __name__ == '__main__':
     app.run(debug=True)

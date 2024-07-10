@@ -1,3 +1,4 @@
+#seed.py
 from faker import Faker
 from random import randint, choice as rc
 from config import app, db, bcrypt
@@ -42,15 +43,18 @@ def seed_data():
             for j in range(5):
                 instructions = fake.paragraph(nb_sentences=8)
                 
-                recipe = Recipe(
-                    title=fake.sentence(),
-                    instructions=instructions,
-                    minutes_to_complete=randint(15,90),
-                    user=user
-                )
+                
+        recipe = Recipe(
+            title=fake.sentence(),
+            instructions=instructions,
+            minutes_to_complete=randint(15,90),
+        )
 
-                db.session.add(recipe)
-                db.session.commit()
+        recipe.user = rc(users)
 
+        recipes.append(recipe)
 
-seed_data()
+    db.session.add_all(recipes)
+    
+    db.session.commit()
+    print("Complete.")
