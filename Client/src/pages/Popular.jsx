@@ -61,7 +61,7 @@ const HomePage = () => {
                 <div className='grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                     {!loading &&
                             recipes.map(({ recipe }, index) => (
-                                <RecipeCard key={index} recipe={recipe} {...getRabdomColor()} />
+                                <RecipeCard key={index} recipe={recipe} {...getRandomColor()} />
                             ))}
 
                     {loading &&
