@@ -1,10 +1,5 @@
 {
   "dependencies": {
-    "formik": "^2.4.6",
-    "prop-types": "^15.8.1",
-    "yup": "^1.4.0"
-  },
-  "devDependencies": {
-    "react-refresh": "^0.14.2"
+    "lucide-react": "^0.407.0"
   }
 }

@@ -1,3 +1,4 @@
+import React from "react";
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -100,7 +101,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
             >
               Register
             </button>
-            <p className="mt-4 text-center text-orange-500">
+            <p className="mt-4 text-center text-black">
               Already have an account? <Link to="/login" className="text-orange-500 underline" onClick={onClose}>Login</Link>
             </p>
           </div>

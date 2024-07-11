@@ -1,3 +1,4 @@
+import React from "react";
 import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Homepage.css";
@@ -126,7 +127,7 @@ const HomePage = () => {
           <div className="team-member bg-orange-400 text-white p-6 rounded-lg shadow-lg">
             <img src="/images/teammember3.jpg" alt="Team Member 3" className="h-32 w-32 rounded-full mx-auto mb-4" />
             <h3 className="text-xl font-bold text-center">Japheth Karani</h3>
-            <p className="text-center">UI/UX</p>
+            <p className="text-center">Frontend Developer</p>
           </div>
           <div className="team-member bg-orange-400 text-white p-6 rounded-lg shadow-lg">
             <img src="/images/justin.jpg" alt="Team Member 4" className="h-32 w-32 rounded-full mx-auto mb-4" />

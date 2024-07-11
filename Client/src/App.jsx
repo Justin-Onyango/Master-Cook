@@ -1,12 +1,13 @@
+import React from "react";
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
-//import FavouritesPage from './pages/FavouritesPage';
-//import Popular from './pages/Popular';
-//import Recipes from './pages/Recipes';
-import LoginModal from './pages/LoginModal';
-import RegisterModal from './pages/RegisterModal';
+import FavoritesPage from './pages/FavoritesPage';
+import Popular from './pages/Popular';
+import Recipes from './pages/Recipes';
+import LoginModal from './pages/LoginModal.jsx';
+import RegisterModal from './pages/RegisterModal.jsx';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { UserProvider } from './context/UserContext';
@@ -31,9 +32,9 @@ function App() {
         <div className="flex">
           <Routes>
             <Route path="/" element={<HomePage />} />
-             {/* <Route path="/favorites" element={<FavoritesPage />} /> */}
-            {/* <Route path="/popular" element={<Popular />} /> */}
-            {/* <Route path="/recipes" element={<Recipes />} /> */}
+              <Route path="/favorites" element={<FavoritesPage />} /> 
+            <Route path="/popular" element={<Popular />} /> 
+             <Route path="/recipes" element={<Recipes />} /> 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
