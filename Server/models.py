@@ -26,15 +26,15 @@ class User(db.Model, SerializerMixin):
 
     @password_hash.setter
     def password_hash(self, password):
-        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
-        self._password_hash = password_hash.decode('utf-8')
+        password_hash = bcrypt.generate_password_hash(password.encode('utf-8')).decode('utf-8')
+        self._password_hash = password_hash
 
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
         return f'User {self.username}, ID: {self.id}'
-
+    
 class Recipe(db.Model, SerializerMixin):
     __tablename__ = 'recipes'
 
@@ -48,8 +48,8 @@ class Recipe(db.Model, SerializerMixin):
     # Foreign Key
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    @validates('instructions')
-    def validates_instructions(self, key, instructions):
-        if not len(instructions) >= 50:
-            raise IntegrityError(None, None, 'Instructions must be at least 50 characters in length')
-        return instructions
+@validates('instructions')
+def validates_instructions(self, key, instructions):
+    if len(instructions) < 50:
+        raise IntegrityError(None, None, 'Instructions must be at least 50 characters in length')
+    return instructions
