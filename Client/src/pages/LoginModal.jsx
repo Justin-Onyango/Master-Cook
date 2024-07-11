@@ -1,7 +1,9 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import * as Yup from 'yup'; 
+import PropTypes from 'prop-types'; 
+
 import { UserContext } from '../context/UserContext';
 
 const LoginModal = ({ isOpen, onClose }) => {
@@ -76,5 +78,10 @@ const LoginModal = ({ isOpen, onClose }) => {
     </div>
   );
 }
+
+LoginModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default LoginModal;
