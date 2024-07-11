@@ -1,7 +1,8 @@
+import React from "react";
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup'; 
+import { object, string, ref } from 'yup'; // Import specific components
 import { UserContext } from '../context/UserContext';
 
 function RegisterPage() {
@@ -14,11 +15,11 @@ function RegisterPage() {
     repeatPassword: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters'),
-    repeatPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Password confirmation is required'),
+  const validationSchema = object().shape({
+    name: string().required('Name is required'),
+    email: string().email('Invalid email address').required('Email is required'),
+    password: string().required('Password is required').min(8, 'Password must be at least 8 characters'),
+    repeatPassword: string().oneOf([ref('password'), null], 'Passwords must match').required('Password confirmation is required'),
   });
 
   const handleSubmit = (values, { setSubmitting }) => {

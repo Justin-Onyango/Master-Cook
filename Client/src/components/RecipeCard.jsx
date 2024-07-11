@@ -1,31 +1,31 @@
-import { Heart, HeartPulse, Soup } from "lucide-react";
+import React from "react";
+import  { Heart, HeartPulse, Soup } from "lucide-react";
 import { useState } from "react";
 
 const getTwoValuesFromArray = (arr) => {
-    return [arr[0], arr[1]];
+	return [arr[0], arr[1]];
 };
 
 const RecipeCard = ({ recipe, bg, badge }) => {
-    const healthLabels = getTwoValuesFromArray(recipe.healthLabels);
-    const [isFavorite, setIsFavorite] = useState(localStorage.getItem("favorites")?.includes(recipe.label));
+	const healthLabels = getTwoValuesFromArray(recipe.healthLabels);
+	const [isFavorite, setIsFavorite] = useState(localStorage.getItem("favorites")?.includes(recipe.label));
 
-    const addRecipeToFavorites = () => {
-        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-        const isRecipeAlreadyInFavorites = favorites.some((fav) => favorites.label === recipe.label);
+	const addRecipeToFavorites = () => {
+		let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+		const isRecipeAlreadyInFavorites = favorites.some((fav) => fav.label === recipe.label);
 
-        if (isRecipeAlreadyInFavorites) {
-            favorites = favorites.filter((fav) => fav.label !== recipe.label);
-            setIsFavorite(false);
-        } else {
-            favorites.push(recipe);
-            setIsFavorite(true);
-        }
-        
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-    };
+		if (isRecipeAlreadyInFavorites) {
+			favorites = favorites.filter((fav) => fav.label !== recipe.label);
+			setIsFavorite(false);
+		} else {
+			favorites.push(recipe);
+			setIsFavorite(true);
+		}
 
+		localStorage.setItem("favorites", JSON.stringify(favorites));
+	};
 
-    return (
+	return (
 		<div className={`flex flex-col rounded-md ${bg} overflow-hidden p-3 relative`}>
 			<a
 				href={`https://www.youtube.com/results?search_query=${recipe.label} recipe`}
@@ -80,3 +80,4 @@ const RecipeCard = ({ recipe, bg, badge }) => {
 		</div>
 	);
 };
+export default RecipeCard;
