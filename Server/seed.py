@@ -14,18 +14,18 @@ def seed_data():
 
         print("Creating users...")
         users = []
-        usernames = []
+        names = []
 
         for i in range(20):
-            username = fake.first_name()
-            while username in usernames:
-                username = fake.first_name()
-            usernames.append(username)
+            name = fake.first_name()
+            while name in names:
+                name = fake.first_name()
+            names.append(name)
 
             email = fake.email()
 
             user = User(
-                username=username,
+                name=name,
                 email=email,
                 bio=fake.paragraph(nb_sentences=3),
                 image_url=fake.url(),
@@ -40,6 +40,7 @@ def seed_data():
             users.append(user)
 
             print("Creating recipes...")
+            recipes =[]
             for j in range(5):
                 instructions = fake.paragraph(nb_sentences=8)
                 
