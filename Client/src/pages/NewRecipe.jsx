@@ -7,12 +7,12 @@ const NewRecipe = () => {
   
     ## Ingredients
     
-    - 1c Sugar
+    - 1c Rie
     - 1c Spice
     
     ## Instructions
     
-    **Mix** sugar and spice. _Bake_ for 30 minutes.
+    **Mix** Rice and spice. _Bake_ for 30 minutes.
       `);
 
   const handleSubmit = (e) => {
@@ -118,7 +118,7 @@ const styles = {
   recipePreview: {
     width: '45%',
     padding: '20px',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#ffA500',
     borderRadius: '5px',
   },
   author: {
