@@ -10,6 +10,7 @@ from flask_migrate import Migrate
 
 
 CORS(app)
+
 app.config["JWT_SECRET_KEY"] = "fsbdgfnhgvjnvhmvh"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 app.config["SECRET_KEY"] = "JKSRVHJVFBSR"
@@ -19,7 +20,7 @@ migrate = Migrate(app, db)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     bio = db.Column(db.String(500))
@@ -31,25 +32,25 @@ class User(db.Model):
 class Login(Resource):
     def post(self):
         data = request.get_json()
-        username = data.get('username')
+        email = data.get('email')
         password = data.get('password')
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
         
         if user is not None and user.authenticate(password):
-            access_token = create_access_token(identity=username)
+            access_token = create_access_token(identity=email)
             session['user_id'] = user.id  
             return jsonify(access_token=access_token)
         
-        return jsonify({"msg": "Bad username or password"}), 401
+        return jsonify({"msg": "Bad email or password"}), 401
 
 class Register(Resource):
     def post(self):
-        username = request.json.get('username')
+        name = request.json.get('name')
         password = request.json.get('password')
         email = request.json.get('email')
         bio = request.json.get('bio')
         image_url = request.json.get('image_url')
-        user = User(username=username, email=email, bio=bio, image_url=image_url)
+        user = User(name=name, email=email, bio=bio, image_url=image_url)
         user.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
         db.session.add(user)
         db.session.commit()
@@ -107,5 +108,5 @@ api.add_resource(RecipeIndex, '/recipes')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
 

@@ -19,4 +19,4 @@ flask-bcrypt = "1.0.1"
 [dev-packages]
 
 [requires]
-python_full_version = "3.8.13"
+python_full_version = "*"

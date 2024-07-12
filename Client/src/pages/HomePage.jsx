@@ -34,7 +34,7 @@ const HomePage = () => {
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="col typography">
-          <h1 className="text-4xl font-bold mb-4">What Are We About</h1>
+          <h1 className="text-4xl font-bold mb-4">What We Are About</h1>
           <p className="text-lg mb-6">
             Master Cook is a place where you can please your soul and tummy with delicious food recipes of all cuisines. And our service is absolutely free. So start exploring now.
           </p>
@@ -134,11 +134,11 @@ const HomePage = () => {
             <h3 className="text-xl font-bold text-center">Justin Onyango</h3>
             <p className="text-center">Frontend Developer</p>
           </div>
-          <div className="team-member bg-orange-400 text-white p-6 rounded-lg shadow-lg">
+          {/* <div className="team-member bg-orange-400 text-white p-6 rounded-lg shadow-lg">
             <img src="/images/brian.jpg" alt="Team Member 5" className="h-32 w-32 rounded-full mx-auto mb-4" />
             <h3 className="text-xl font-bold text-center">Brian Onchwari</h3>
             <p className="text-center">Backend Developer</p>
-          </div>
+          </div> */}
         </div>
       </section>
 

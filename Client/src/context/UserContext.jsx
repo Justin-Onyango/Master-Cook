@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
 
     // Register User
     const register = (name, email, password) => {
-        fetch('http://localhost:8080/users', {
+        fetch('http://localhost:5000/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ export const UserProvider = ({ children }) => {
 
     // Login User
     const login = (email, password) => {
-        fetch('http://localhost:8080/login', {
+        fetch('http://localhost:5000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ export const UserProvider = ({ children }) => {
 
     // Logout User
     const logout = () => {
-        fetch('http://localhost:8080/logout', {
+        fetch('http://localhost:5000/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         if(authToken) {
-            fetch('http://localhost:8080/current_user', {
+            fetch('http://localhost:5000/current_user', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
