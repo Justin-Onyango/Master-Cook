@@ -110,7 +110,7 @@ const styles = {
   button: {
     padding: '10px',
     fontSize: '16px',
-    backgroundColor: 'purple',
+    backgroundColor: 'orange',
     color: 'white',
     border: 'none',
     cursor: 'pointer',

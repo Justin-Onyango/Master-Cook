@@ -35,7 +35,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
               <Route path="/favorites" element={<FavoritesPage />} /> 
             <Route path="/popular" element={<Popular />} /> 
-             <Route path="/recipes" element={<Recipes />} /> 
+             {/* <Route path="/recipes" element={<Recipes />} />  */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/new" element = {<NewRecipe />} />
