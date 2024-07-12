@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+import {useEffect} from 'react';
 
 const NewRecipe = () => {
   const [title, setTitle] = useState('My Awesome Recipe');
@@ -14,12 +17,34 @@ const NewRecipe = () => {
     
     **Mix** sugar and spice. _Bake_ for 30 minutes.
       `);
+      useEffect(() => {
+        const fetchUsername = async () => {
+          try {
+            const response = await axios.get('http://localhost:5000/get-username');
+            setUsername(response.data.username);
+          } catch (error) {
+            console.error("There was an error fetching the username!", error);
+          }
+        };
+    
+        fetchUsername();
+      }, []);
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post('http://localhost:5000/submit-recipe', {
+            title,
+            minutes,
+            instructions,
+            username
+          });
+          setMessage(response.data.message);
+        } catch (error) {
+          console.error("There was an error submitting the recipe!", error);
+        }
+      };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // handle form submission
-    console.log({ title, minutes, instructions });
-  };
 
   return (
     <div style={styles.container}>
@@ -50,6 +75,7 @@ const NewRecipe = () => {
             <label htmlFor="instructions">Instructions</label>
             <textarea
               id="instructions"
+              rows="10"
               value={instructions}
               onChange={(e) => setInstructions(e.target.value)}
               style={styles.textarea}
@@ -63,7 +89,7 @@ const NewRecipe = () => {
       <div style={styles.recipePreview}>
         <h2>{title || 'My Awesome Recipe'}</h2>
         <p>
-          Time to Complete: {minutes || '30'} minutes · By <span style={styles.author}>User</span>
+          Time to Complete: {minutes || '30'} minutes · By <span style={styles.author}>{username}</span>
         </p>
         <h3>Ingredients</h3>
         <ul>
