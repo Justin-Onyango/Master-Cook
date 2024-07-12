@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.orange-input .form-control {
+    background-color: orange;
+    border: 2px solid orange;
+    color: white; 
+  }
+  
+  .orange-input .form-control::placeholder {
+    color: white; 
+  }
+  
+  .orange-input .form-control:focus {
+    background-color: orange;
+    border-color: orange;
+    box-shadow: 0 0 0 0.2rem rgba(255, 165, 0, 0.25);
+    color: white;
+  }
+  
+  .orange-input .form-control[type="email"],
+  .orange-input .form-control[type="password"] {
+    color: orange; 
+  }
+  
+  
+  

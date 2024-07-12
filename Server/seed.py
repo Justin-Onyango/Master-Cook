@@ -1,49 +1,52 @@
-#seed.py
-from faker import Faker
+#!/usr/bin/env python3
+
 from random import randint, choice as rc
-from config import app, db, bcrypt
-from models import User, Recipe
+
+from faker import Faker
+
+from app import app
+from models import db, Recipe, User
 
 fake = Faker()
 
-def seed_data():
-    with app.app_context():
-        print("Deleting all records...")
-        db.session.query(Recipe).delete()
-        db.session.query(User).delete()
+with app.app_context():
 
-        print("Creating users...")
-        users = []
-        usernames = []
+    print("Deleting all records...")
+    Recipe.query.delete()
+    User.query.delete()
 
-        for i in range(20):
+    fake = Faker()
+
+    print("Creating users...")
+
+    # make sure users have unique usernames
+    users = []
+    usernames = []
+
+    for i in range(20):
+        
+        username = fake.first_name()
+        while username in usernames:
             username = fake.first_name()
-            while username in usernames:
-                username = fake.first_name()
-            usernames.append(username)
+        usernames.append(username)
 
-            email = fake.email()
+        user = User(
+            username=username,
+            bio=fake.paragraph(nb_sentences=3),
+            image_url=fake.url(),
+        )
 
-            user = User(
-                username=username,
-                email=email,
-                bio=fake.paragraph(nb_sentences=3),
-                image_url=fake.url(),
-            )
+        user.password_hash = user.username + 'password'
 
-            password = "newpass"
-            user.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+        users.append(user)
 
-            db.session.add(user)
-            db.session.commit()
+    db.session.add_all(users)
 
-            users.append(user)
-
-            print("Creating recipes...")
-            for j in range(5):
-                instructions = fake.paragraph(nb_sentences=8)
-                
-                
+    print("Creating recipes...")
+    recipes = []
+    for i in range(100):
+        instructions = fake.paragraph(nb_sentences=8)
+        
         recipe = Recipe(
             title=fake.sentence(),
             instructions=instructions,
