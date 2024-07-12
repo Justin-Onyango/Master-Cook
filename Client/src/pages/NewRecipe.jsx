@@ -118,7 +118,7 @@ const styles = {
   recipePreview: {
     width: '45%',
     padding: '20px',
-    backgroundColor: '#ffA500',
+    backgroundColor: 'light grey',
     borderRadius: '5px',
   },
   author: {
