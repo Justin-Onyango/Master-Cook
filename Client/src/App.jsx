@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import FavoritesPage from './pages/FavoritesPage';
 import Popular from './pages/Popular';
-import Recipes from './pages/Recipes';
+//import Recipes from './pages/Recipes';
 import LoginModal from './pages/LoginModal.jsx';
 import RegisterModal from './pages/RegisterModal.jsx';
 import Login from './pages/Login';
