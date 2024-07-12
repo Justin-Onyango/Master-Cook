@@ -23,6 +23,9 @@ const Navbar = ({ onLoginClick, onRegisterClick }) => {
         <Link to="/recipes" className="flex gap-1 text-orange-500 hover:text-orange-700">
           <span className="font-bold hidden md:block">Recipes</span>
         </Link>
+        <Link to="/new" className="flex gap-1 text-orange-500 hover:text-orange-700">
+          <span className="font-bold hidden md:block">New Recipe</span>
+        </Link>
         <button
           onClick={onLoginClick}
           className="flex gap-1 text-orange-500 hover:text-orange-700"
