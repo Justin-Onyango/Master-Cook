@@ -1,11 +1,9 @@
-import React from "react";
-const Recipes = () => {
-    return (
-      <div>
-        <h1>Recipes</h1>
-        {/* Add your content here */}
-      </div>
-    );
-  };
-  
-  export default Recipes;
+import React from 'react'
+
+export default function Recipes() {
+  return (
+    <div>
+      <h1>RecipeList</h1>
+    </div>
+  )
+}
