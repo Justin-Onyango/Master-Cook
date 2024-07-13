@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import NewRecipe from './pages/NewRecipe';
 import { UserProvider } from './context/UserContext';
 import * as serviceWorker from './ serviceWorker.js';
+import Footer from "./components/Footer.jsx";
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -34,13 +35,14 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
               <Route path="/favorites" element={<FavoritesPage />} /> 
-            <Route path="/popular" element={<Popular />} /> 
-             {/* <Route path="/recipes" element={<Recipes />} />  */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/new" element = {<NewRecipe />} />
+              <Route path="/popular" element={<Popular />} /> 
+              <Route path="/recipes" element={<Recipes />} />  
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/new" element = {<NewRecipe />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </UserProvider>
   );
