@@ -1,5 +1,4 @@
-import React from "react";
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Homepage.css";
 
@@ -18,7 +17,7 @@ const HomePage = () => {
   ];
 
   const slideRef = useRef(null);
-  const slideIndexRef = useRef(0); 
+  const slideIndexRef = useRef(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -96,7 +95,7 @@ const HomePage = () => {
               comment: "Master Cook is a game-changer. The recipes are well-curated and the app design is superb!",
             }
           ].map((testimonial, index) => (
-            <div key={index} className="testimonial bg-orange-500  text-white rounded-lg p-6 shadow-lg mx-4 max-w-xs flex-shrink-0">
+            <div key={index} className="testimonial bg-orange-500 text-white rounded-lg p-6 shadow-lg mx-4 max-w-xs flex-shrink-0">
               <img src={testimonial.image} alt={testimonial.name} className="w-24 h-24 rounded-full mx-auto mb-4" />
               <p className="text-gray-100 mt-4">{testimonial.comment}</p>
               <footer className="mt-4 font-bold">{testimonial.name}</footer>

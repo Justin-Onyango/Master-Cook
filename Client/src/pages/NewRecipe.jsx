@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const NewRecipe = () => {
   const [title, setTitle] = useState('My Awesome Recipe');
   const [minutes, setMinutes] = useState('30');
   const [instructions, setInstructions] = useState(`Here's how you make it.
   
-    ## Ingredients
-    
-    - 1c Rie
-    - 1c Spice
-    
-    ## Instructions
-    
-    **Mix** Rice and spice. _Bake_ for 30 minutes.
-      `);
 
-  const handleSubmit = (e) => {
+## Ingredients
+
+- 1c Sugar
+- 1c Spice
+
+## Instructions
+
+**Mix** sugar and spice. _Bake_ for 30 minutes.
+  `);
+  const [username, setUsername] = useState('');
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/recipes');
+        setUser_id(response.data.user_id);
+      } catch (error) {
+        console.error("There was an error fetching the user_id", error);
+      }
+    };
+
+fetchUser();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // handle form submission
-    console.log({ title, minutes, instructions });
+    try {
+      const response = await axios.post('http://localhost:5000/recipes', {
+        title,
+        minutes,
+        instructions,
+        username
+      });
+      setMessage(response.data.message);
+    } catch (error) {
+      console.error("There was an error submitting the recipe!", error);
+    }
   };
 
   return (
@@ -50,6 +76,7 @@ const NewRecipe = () => {
             <label htmlFor="instructions">Instructions</label>
             <textarea
               id="instructions"
+              rows="10"
               value={instructions}
               onChange={(e) => setInstructions(e.target.value)}
               style={styles.textarea}
@@ -63,7 +90,7 @@ const NewRecipe = () => {
       <div style={styles.recipePreview}>
         <h2>{title || 'My Awesome Recipe'}</h2>
         <p>
-          Time to Complete: {minutes || '30'} minutes · By <span style={styles.author}>User</span>
+          Time to Complete: {minutes || '30'} minutes · By <span style={styles.author}>{username}</span>
         </p>
         <h3>Ingredients</h3>
         <ul>
@@ -75,6 +102,7 @@ const NewRecipe = () => {
           <strong>Mix</strong> sugar and spice. <em>Bake</em> for 30 minutes.
         </p>
       </div>
+      {message && <p>{message}</p>}
     </div>
   );
 };
@@ -118,7 +146,7 @@ const styles = {
   recipePreview: {
     width: '45%',
     padding: '20px',
-    backgroundColor: 'light grey',
+    backgroundColor: 'gray white',
     borderRadius: '5px',
   },
   author: {
@@ -127,3 +155,5 @@ const styles = {
 };
 
 export default NewRecipe;
+
+
