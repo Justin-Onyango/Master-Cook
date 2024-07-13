@@ -20,9 +20,9 @@ const Navbar = ({ onLoginClick, onRegisterClick }) => {
         <Link to="/popular" className="flex gap-1 text-orange-500 hover:text-orange-700">
           <span className="font-bold hidden md:block">Popular</span>
         </Link>
-        {/* <Link to="/recipes" className="flex gap-1 text-orange-500 hover:text-orange-700">
+        <Link to="/recipes" className="flex gap-1 text-orange-500 hover:text-orange-700">
           <span className="font-bold hidden md:block">Recipes</span>
-        </Link> */}
+        </Link> 
         <Link to="/new" className="flex gap-1 text-orange-500 hover:text-orange-700">
           <span className="font-bold hidden md:block">New Recipe</span>
         </Link>
