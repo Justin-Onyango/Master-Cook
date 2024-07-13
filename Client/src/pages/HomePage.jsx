@@ -117,7 +117,7 @@ const HomePage = () => {
           <div className="team-member bg-orange-400 text-white p-6 rounded-lg shadow-lg">
             <img src="/images/teammember5.jpg" alt="Team Member 1" className="h-32 w-32 rounded-full mx-auto mb-4" />
             <h3 className="text-xl font-bold text-center">Fardosa Gedi</h3>
-            <p className="text-center">Full Stack Developer</p>
+            <p className="text-center">Frontend Developer</p>
           </div>
           <div className="team-member bg-orange-400 text-white p-6 rounded-lg shadow-lg">
             <img src="/images/teammember2.jpg" alt="Team Member 2" className="h-32 w-32 rounded-full mx-auto mb-4" />
